@@ -1,0 +1,8 @@
+# Operating System files
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# Temporary files
+*.tmp
+*.crdownload

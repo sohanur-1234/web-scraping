@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paper Finder</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>Paper Finder</h1>
+    <p>Search a topic. Open-access PDFs from good journals download for you.</p>
+  </header>
+
+  <section class="form">
+    <label class="wide">Topic
+      <input id="topic" type="text" placeholder="e.g. EEG seizure detection deep learning" autocomplete="off">
+    </label>
+
+    <fieldset class="wide order">
+      <legend>Search order (top is tried first)</legend>
+      <ul id="sources"></ul>
+    </fieldset>
+
+    <label>Year from
+      <input id="yearFrom" type="number" min="1900" max="2100" placeholder="2020">
+    </label>
+    <label>Year to
+      <input id="yearTo" type="number" min="1900" max="2100" placeholder="2026">
+    </label>
+    <label>Papers to download
+      <input id="max" type="number" min="1" max="50" value="10">
+    </label>
+    <label>Sort by
+      <select id="sort">
+        <option value="citations">Most cited</option>
+        <option value="relevance">Best match</option>
+        <option value="newest">Newest</option>
+      </select>
+    </label>
+
+    <label>Min impact (2-year citedness)
+      <input id="minImpact" type="number" min="0" step="0.5" value="0">
+    </label>
+    <label>Journal quartile (SJR)
+      <select id="quartile">
+        <option value="0">Any</option>
+        <option value="1">Q1 only</option>
+        <option value="2">Q1 and Q2</option>
+        <option value="3">Q1 to Q3</option>
+      </select>
+    </label>
+
+    <label class="check wide">
+      <input id="oaOnly" type="checkbox">
+      Only search papers already marked open access
+    </label>
+  </section>
+
+  <section class="actions">
+    <button id="start" class="primary">Search and download</button>
+    <button id="stop" hidden>Stop</button>
+    <span id="phase" role="status" aria-live="polite"></span>
+  </section>
+
+  <p id="message" class="message" hidden></p>
+
+  <section id="results" hidden>
+    <div class="results-head">
+      <h2 id="summary">Results</h2>
+      <button id="export">Export CSV</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Paper</th><th>Journal</th><th>Year</th><th title="SJR best quartile">Q</th><th title="2-year mean citedness (approx. impact factor)">IF</th><th>Status</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <details id="settings">
+    <summary>Settings</summary>
+    <label class="wide">Your email (required by Unpaywall and OpenAlex)
+      <input id="email" type="email" placeholder="you@example.com" autocomplete="email">
+    </label>
+    <div class="sjr">
+      <p>
+        Quartiles come from a SCImago file. Download the CSV from scimagojr.com (Journal Rankings, Download data) and import it once.
+        <span id="sjrInfo"></span>
+      </p>
+      <input id="sjrFile" type="file" accept=".csv,text/csv">
+    </div>
+  </details>
+
+  <script src="popup.js"></script>
+</body>
+</html>

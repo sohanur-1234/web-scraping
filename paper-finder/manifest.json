@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Paper Finder",
+  "version": "1.2.0",
+  "description": "Search several paper sites in your chosen order, filter journals by quartile and impact, and download open-access PDFs automatically.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Paper Finder"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "downloads",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://scholar.google.com/*",
+        "https://www.google.com/sorry/*"
+      ],
+      "js": [
+        "scholar.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
